@@ -47,8 +47,7 @@ class ApplicationController < ActionController::Base
     @n = params.fetch("user_input_years").to_f
     @m = @n * 12
     @principal = params.fetch("user_input_principal").to_f
-    @pmt = 100
-    # (@principal * @rate/@m)/(1-(1+@m)(-1*@m))
+    @pmt = (@principal * (@rate/@m))/(1-(1+@m)**(-1*@m))
 
     render({:template => "calc_temp/pmt_result.html.erb"})
   end
