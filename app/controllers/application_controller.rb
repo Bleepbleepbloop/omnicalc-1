@@ -26,6 +26,16 @@ class ApplicationController < ActionController::Base
   end
 
   #SQRT
+  def blank_sqrt_form
+    render({:template => "calc_temp/sqrt_form.html.erb"})
+  end
+
+  def calc_square
+    @num = params.fetch("user_input_sqrt").to_f
+    @sqrt_num = @num ** .5
+
+    render({:template => "calc_temp/sqrt_result.html.erb"})
+  end
 
   #PMT
 
