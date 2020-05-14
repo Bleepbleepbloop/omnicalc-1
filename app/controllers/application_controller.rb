@@ -43,11 +43,21 @@ class ApplicationController < ActionController::Base
   end
 
   def calc_pmt
-    @rate = params.fetch("user_input_rate").to_f
-    @n = params.fetch("user_input_years").to_f
-    @m = @n * 12
-    @principal = params.fetch("user_input_principal").to_f
-    @pmt = (@principal * (@rate/@m))/(1-(1+@m)**(-1*@m))
+    # @rate = params.fetch("user_input_rate").to_f
+    # @n = params.fetch("user_input_years").to_f
+    # @m = @n * 12
+    # @principal = params.fetch("user_input_principal").to_f
+    # @pmt = (@principal * (@rate/@m))/(1-(1+@m)**(-1*@m))
+
+    @apr = params.fetch("apr").to_f
+    @num_years = params.fetch("num_years").to_i
+    @principal = params.fetch("principal").to_f
+    @interest_rate = @apr / 1200
+    @num_payments = @num_years * 12
+    @numerator = @principal * @interest_rate
+    @denominator = 1 - (1 + @interest_rate) ** -@num_payments
+    @monthly_payment = @numerator / @denominator
+
 
     render({:template => "calc_temp/pmt_result.html.erb"})
   end
